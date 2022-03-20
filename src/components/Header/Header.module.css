@@ -1,11 +1,14 @@
 .Header{
-    width: 100%;
-    display: flex;
-    height: 60px;
-    border-bottom: solid 1px #adadad;
-    align-items: center;
-    padding: 0 30px;
-    box-sizing: border-box;
-    justify-content: space-between;
-
+    background: #ffff;
+    color: #4f4f4f;
 }
+
+
+.Button{
+    align-self: normal;
+}
+
+.Active , .Active:hover{
+    
+}
+
