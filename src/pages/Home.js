@@ -1,0 +1,11 @@
+import React from 'react';
+import Forecast from '../components/Forecast/Forecast';
+import Container from '@mui/material/Container';
+
+export default function Home() {
+  return (
+    <Container sx={{marginTop:"10px"}} maxWidth="xl">
+        <Forecast/>
+    </Container>
+  )
+}
