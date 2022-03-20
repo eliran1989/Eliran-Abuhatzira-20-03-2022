@@ -1,13 +1,6 @@
-.Header{
-    background: #ffff;
-    color: #4f4f4f;
-}
-
-
 .Button{
     align-self: normal;
     flex-grow: 1;
-    color: initial;
 }
 
 
@@ -15,7 +8,5 @@
     flex-grow: 2;
 }
 
-.Active , .Active:hover{
-    
-}
+
 

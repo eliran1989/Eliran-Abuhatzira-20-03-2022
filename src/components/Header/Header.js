@@ -9,12 +9,12 @@ import classes from './Header.module.css'
 
 export default function Header() {
   return (
-      <AppBar className={classes.Header}>
+      <AppBar color="default" className={classes.Header} position="sticky">
         <Toolbar>
           <Typography variant="h6" component="div" className={classes.Title}>
             Weather
           </Typography>
-          <Button className={classes.Button+" , "+classes.Active}>Home</Button>
+          <Button className={classes.Button}>Home</Button>
           <Button className={classes.Button}>Favorites</Button>
         </Toolbar>
       </AppBar>
