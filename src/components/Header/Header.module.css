@@ -6,6 +6,13 @@
 
 .Button{
     align-self: normal;
+    flex-grow: 1;
+    color: initial;
+}
+
+
+.Title{
+    flex-grow: 2;
 }
 
 .Active , .Active:hover{

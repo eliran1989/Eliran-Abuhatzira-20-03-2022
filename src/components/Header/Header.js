@@ -11,11 +11,11 @@ export default function Header() {
   return (
       <AppBar className={classes.Header}>
         <Toolbar>
-          <Typography variant="h5" component="div"  sx={{ flexGrow: 2 }}>
+          <Typography variant="h6" component="div" className={classes.Title}>
             Weather
           </Typography>
-          <Button color="inherit" className={classes.Button+" , "+classes.Active} sx={{ flexGrow:1}}>Home</Button>
-          <Button color="inherit" className={classes.Button} sx={{ flexGrow:1}}>Favorites</Button>
+          <Button className={classes.Button+" , "+classes.Active}>Home</Button>
+          <Button className={classes.Button}>Favorites</Button>
         </Toolbar>
       </AppBar>
   );
