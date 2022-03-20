@@ -1,0 +1,11 @@
+.Content{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.Forecast > div{
+    height: 100px;
+    width: 18%;
+}
