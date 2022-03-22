@@ -1,11 +1,41 @@
 .Content{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
-
-
 
 .Forecast > div{
     height: 100px;
     width: 18%;
+}
+
+.Headline{
+    justify-content: space-around;
+}
+
+.Temp{
+    text-align: center;
+}
+
+.Temp > span{
+
+    position: relative;
+    bottom: 10px; 
+    font-size: 0.6rem;
+}
+
+.ForecastIcon img{
+    margin: 0 auto;
+    display: block;
+}
+
+
+@media (max-width: 600px){
+
+
+    .Forecast > div{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
 }
