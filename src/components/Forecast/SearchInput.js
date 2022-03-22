@@ -114,8 +114,3 @@ export default function SearchInput() {
   );
 }
 
-
-/* const countries = [
-  { code: 'AD', label: 'Andorra'},
-
-]; */
