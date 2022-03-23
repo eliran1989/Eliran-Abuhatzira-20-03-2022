@@ -1,6 +1,5 @@
 import * as React from 'react';
 import './App.css';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header/Header'
@@ -10,8 +9,9 @@ import Favorites from './pages/Favorites'
 import {
   BrowserRouter,
   Routes,
-  Route,
+  Route
 } from "react-router-dom";
+
 
 function App() {
   
@@ -29,13 +29,12 @@ function App() {
     <ThemeProvider theme={theme}>
     <CssBaseline />
     <BrowserRouter>
-
-      <Header/>
+    <Header/>
       <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="favorites" element={<Favorites />} />
+       
+        <Route path="/" element={<Home />} />
+        <Route path="favorites" element={<Favorites />} />
       </Routes>
-
     </BrowserRouter>
 
 
