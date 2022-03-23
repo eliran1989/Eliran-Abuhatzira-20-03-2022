@@ -5,8 +5,8 @@
 }
 
 .Forecast > div{
-    height: 100px;
     width: 18%;
+    padding:30px
 }
 
 .Headline{
@@ -30,6 +30,16 @@
 }
 
 
+.FavIcon{
+    font-size: 30;
+    color:#ff5151;
+    cursor: pointer;
+}
+
+
+
+
+
 @media (max-width: 600px){
 
 
@@ -37,5 +47,5 @@
         width: 100%;
         margin-bottom: 10px;
     }
-    
+
 }
