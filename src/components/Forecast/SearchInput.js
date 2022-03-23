@@ -27,7 +27,7 @@ export default function SearchInput() {
         inputTimeout = setTimeout(() => {
 
 
-            fetch(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?q=${e.target.value}&apikey=tH830Qy8EELpkoLx9i3rhN3EEDcA2FgK`).then(res=>res.json()).then(response=>{
+            fetch(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?q=${e.target.value}&apikey=rgdNsquM1veb1u98AAjf473E1xAxM0Ad`).then(res=>res.json()).then(response=>{
                
 
 
