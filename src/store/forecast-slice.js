@@ -4,8 +4,8 @@ import { act } from 'react-dom/test-utils';
 const forecastSlice = createSlice({
   name: 'forecast',
   initialState: {
-    cityName:"Tel Aviv , IL",
-    cityKey:"213225",
+    cityName:"Tel Aviv (Israel)",
+    cityKey:"215854",
     headline:{
         category:"",
         text:""
