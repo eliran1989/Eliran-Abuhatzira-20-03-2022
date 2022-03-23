@@ -3,15 +3,22 @@ import classes from './Forecast.module.css'
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Alert, Paper,Skeleton,Snackbar,Typography } from '@mui/material';
+import {Alert, Paper,Skeleton,Snackbar,Tooltip,Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { forecastActions } from '../../store/forecast-slice';
+import { favoritesActions } from '../../store/favorites-slice';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import SearchInput from './SearchInput';
 
 export default function Forecast() {
 
+
+
+
     const dispatch = useDispatch();
+    
+    const [error, setError] = useState(false)
+    const [favoriteHover , setFavoriteHover] = useState(false);
 
 
     const cityName = useSelector((state) => state.forecast.cityName);
@@ -19,11 +26,15 @@ export default function Forecast() {
     const headline =  useSelector((state) => state.forecast.headline);
     const forecast =  useSelector((state) => state.forecast.fiveDaysForecast);
     const loading = useSelector((state) => state.forecast.loading);
-
-     const [error, setError] = useState(false)
+    const favorites = useSelector((state) => state.favorites.items);
 
     
+
+
+
     useEffect(() => {
+
+        setError(false)
 
             const localData = (localStorage.getItem("localForecastState")) ? JSON.parse(localStorage.getItem("localForecastState")) :null;
 
@@ -37,17 +48,21 @@ export default function Forecast() {
             }else{
                 
 
-                fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=tH830Qy8EELpkoLx9i3rhN3EEDcA2FgK&metric=true`,{}).then(res=>res.json()).then(response=>{
+                fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=rgdNsquM1veb1u98AAjf473E1xAxM0Ad&metric=true`,{}).then(res=>res.json()).then(response=>{
             
                   const forecast = [];
+                  const daysName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
 
                   response.DailyForecasts.forEach(forecastDay => {
+
                         forecast.push({
                             temp:{
                                 min:forecastDay.Temperature.Minimum,
                                 max:forecastDay.Temperature.Maximum
                             },
-                            Icon:forecastDay.Day 
+                            Icon:forecastDay.Day,
+                            dayName:daysName[new Date(forecastDay.Date).getDay()]
                         })
                     });
     
@@ -80,12 +95,16 @@ export default function Forecast() {
 
 
 
-
-
+    const toggleFavoriteHandler = () =>{
+        dispatch(
+            favoritesActions.toggle({
+                cityKey:cityKey
+            })
+        )
+    }
 
   return (
         <>
-        <SearchInput/>
         <Card>
                 
                 {
@@ -95,7 +114,14 @@ export default function Forecast() {
                     <Typography variant="h5" component="div">
                         {cityName}
                     </Typography>
-                    <FavoriteBorderOutlinedIcon sx={{ fontSize: 30 , color:"#ff5151" }}/>
+                    <Tooltip title={(favorites.indexOf(cityKey) === -1) ? "Add to favorites":"Remove from favorites"} arrow>
+                        {
+                            (!favoriteHover && favorites.indexOf(cityKey) === -1) ?
+                            <FavoriteBorderOutlinedIcon onMouseEnter={()=>setFavoriteHover(true)} className={classes.FavIcon} />
+                            :
+                            <FavoriteIcon onClick={()=>toggleFavoriteHandler()} onMouseLeave={()=>setFavoriteHover(false)} className={classes.FavIcon} />
+                        }
+                    </Tooltip>
                 </CardContent>
                 <CardContent className={classes.Content}>
                     <Typography variant="h6" component="div" className={classes.Headline}>
@@ -103,8 +129,11 @@ export default function Forecast() {
                     </Typography>
                 </CardContent>
                 <CardContent className={[classes.Content , classes.Forecast].join(" , ")} >
-                    { forecast.map(forecastItem=>
-                        <Paper>
+                    { forecast.map((forecastItem , index)=>
+                        <Paper key={`forecastItem${index}`}>
+                            <Typography variant="h5" component="div" className={classes.Temp}>
+                                    {forecastItem.dayName}
+                            </Typography>
                             <Typography variant="h6" component="div" className={classes.Temp}>
                                     {`${Math.ceil(forecastItem.temp.min.Value)}`}
                                     <span>{forecastItem.temp.min.Unit}</span>
@@ -127,7 +156,6 @@ export default function Forecast() {
                     <Typography variant="h5" component="div">
                         <Skeleton sx={{width:"100px"}}/>
                     </Typography>
-                    <FavoriteBorderOutlinedIcon sx={{ fontSize: 30 , color:"#ff5151" }}/>
                 </CardContent>
                 <CardContent className={classes.Content}>
                     <Typography variant="h6" component="div" className={classes.Headline}>
@@ -154,7 +182,7 @@ export default function Forecast() {
         </Card>
          {
              error && 
-            <Alert severity="error">This is a success message!</Alert>
+            <Alert severity="error">An error has occurred</Alert>
          }
         </>
   )
