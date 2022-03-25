@@ -1,0 +1,30 @@
+.Item{
+    padding: 30px;
+    width: 30%;
+    margin: 30px 0;
+    text-align: center;
+    position: relative;
+}
+
+.Temp span{
+    position: relative;
+    bottom: 10px; 
+    font-size: 0.6rem;
+}
+
+
+.RemoveButton{
+    cursor: pointer;
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+}
+
+@media (max-width: 600px){
+
+    .Item{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+}

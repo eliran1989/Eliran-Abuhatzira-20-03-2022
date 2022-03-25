@@ -8,11 +8,10 @@ const favoritesSlice = createSlice({
   reducers: {
     toggle(state, action) {
 
-
-      if(state.items.indexOf(action.payload.cityKey)!==-1){
-        state.items = state.items.filter((cityKey)=>cityKey!==action.payload.cityKey)
+      if(state.items.map((city)=>city.cityKey).indexOf(action.payload.cityKey)!==-1){
+        state.items = state.items.filter((city)=>city.cityKey!==action.payload.cityKey)
       }else{
-        state.items = [...state.items , action.payload.cityKey]
+        state.items = [...state.items , {cityKey:action.payload.cityKey , cityName: action.payload.cityName}]
       }
 
 
