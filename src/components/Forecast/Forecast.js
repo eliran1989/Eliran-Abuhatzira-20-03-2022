@@ -3,21 +3,23 @@ import classes from './Forecast.module.css'
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Alert, Paper,Skeleton,Snackbar,Tooltip,Typography } from '@mui/material';
+import {Paper,Skeleton , Tooltip ,Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { forecastActions } from '../../store/forecast-slice';
 import { favoritesActions } from '../../store/favorites-slice';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import SearchInput from './SearchInput';
+import { uiActions } from '../../store/ui-slice';
+import {apiKey} from '../../apiKey';
+import WeatherIcon from '../UI/WeatherIcon/WeatherIcon';
+
+
+
 
 export default function Forecast() {
 
 
-
-
     const dispatch = useDispatch();
     
-    const [error, setError] = useState(false)
     const [favoriteHover , setFavoriteHover] = useState(false);
 
 
@@ -33,8 +35,12 @@ export default function Forecast() {
 
 
     useEffect(() => {
-
-        setError(false)
+        
+        dispatch(
+            uiActions.setError({
+                errorMsg:false
+            })
+        )
 
             const localData = (localStorage.getItem("localForecastState")) ? JSON.parse(localStorage.getItem("localForecastState")) :null;
 
@@ -48,12 +54,13 @@ export default function Forecast() {
             }else{
                 
 
-                fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=rgdNsquM1veb1u98AAjf473E1xAxM0Ad&metric=true`,{}).then(res=>res.json()).then(response=>{
+                fetch(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${apiKey}&metric=true`,{}).then(res=>res.json()).then(response=>{
             
                   const forecast = [];
                   const daysName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 
+                  
                   response.DailyForecasts.forEach(forecastDay => {
 
                         forecast.push({
@@ -79,10 +86,12 @@ export default function Forecast() {
                     )
         
                 }).catch(error=>{
-                    console.log(error);
-    
-                    setError(error)
-  
+                    
+                    dispatch(
+                        uiActions.setError({
+                            errorMsg:error.toString()
+                        })
+                    )
             
                 })
 
@@ -98,15 +107,14 @@ export default function Forecast() {
     const toggleFavoriteHandler = () =>{
         dispatch(
             favoritesActions.toggle({
-                cityKey:cityKey
+                cityKey:cityKey,
+                cityName:cityName
             })
         )
     }
 
   return (
-        <>
         <Card>
-                
                 {
                  !loading ?
                 <>
@@ -114,12 +122,20 @@ export default function Forecast() {
                     <Typography variant="h5" component="div">
                         {cityName}
                     </Typography>
-                    <Tooltip title={(favorites.indexOf(cityKey) === -1) ? "Add to favorites":"Remove from favorites"} arrow>
+                    <Tooltip title={(favorites.map((e)=>e.cityKey).indexOf(cityKey) === -1) ? "Add to favorites":"Remove from favorites"} arrow>
                         {
-                            (!favoriteHover && favorites.indexOf(cityKey) === -1) ?
-                            <FavoriteBorderOutlinedIcon onMouseEnter={()=>setFavoriteHover(true)} className={classes.FavIcon} />
+                            (favorites.map((e)=>e.cityKey).indexOf(cityKey) === -1  && !favoriteHover) ?
+                            <FavoriteBorderOutlinedIcon 
+                                onClick={()=>toggleFavoriteHandler()} 
+                                onMouseEnter={()=>setFavoriteHover(true)} 
+                                className={classes.FavIcon} 
+                            />
                             :
-                            <FavoriteIcon onClick={()=>toggleFavoriteHandler()} onMouseLeave={()=>setFavoriteHover(false)} className={classes.FavIcon} />
+                            <FavoriteIcon 
+                                onClick={()=>toggleFavoriteHandler()} 
+                                onMouseLeave={()=>setFavoriteHover(false)}
+                                className={classes.FavIcon} 
+                             />
                         }
                     </Tooltip>
                 </CardContent>
@@ -141,9 +157,7 @@ export default function Forecast() {
                                     {`${Math.ceil(forecastItem.temp.max.Value)}`}
                                     <span>{forecastItem.temp.min.Unit}</span>
                             </Typography>
-                            <Typography component="div" className={classes.ForecastIcon}>
-                                    <img src={`https://developer.accuweather.com/sites/default/files/${(forecastItem.Icon.Icon<10) ?`0${forecastItem.Icon.Icon}` : forecastItem.Icon.Icon}-s.png`} alt={forecastItem.Icon.IconPhrase} title={forecastItem.Icon.IconPhrase}/>
-                            </Typography>
+                            <WeatherIcon icon_code={forecastItem.Icon.Icon} title={forecastItem.Icon.IconPhrase} style={{margin:"0 auto" , display:"block"}}/>
                         </Paper>
                     ) }
                 </CardContent>
@@ -180,10 +194,6 @@ export default function Forecast() {
                 }
 
         </Card>
-         {
-             error && 
-            <Alert severity="error">An error has occurred</Alert>
-         }
-        </>
+
   )
 }

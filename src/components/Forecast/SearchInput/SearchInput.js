@@ -1,21 +1,20 @@
-import React, { useState }  from 'react';
+import React, {  useState }  from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import classes from './SearchInput.module.css'
-import { Skeleton } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { forecastActions } from '../../store/forecast-slice';
+import { forecastActions } from '../../../store/forecast-slice'
+import { uiActions } from '../../../store/ui-slice'
+import {apiKey} from '../../../apiKey'
 
 export default function SearchInput() {
 
-    const dispatch = useDispatch();
-
-
-    let inputTimeout;
-
     const [options, setOptions] = useState([])
 
+    const dispatch = useDispatch();
+
+    let inputTimeout;
 
     const searchHandler = (e) =>{
 
@@ -27,7 +26,13 @@ export default function SearchInput() {
         inputTimeout = setTimeout(() => {
 
 
-            fetch(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?q=${e.target.value}&apikey=rgdNsquM1veb1u98AAjf473E1xAxM0Ad`).then(res=>res.json()).then(response=>{
+          dispatch(
+            uiActions.setError({
+                errorMsg:false
+            })
+          )
+
+            fetch(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?q=${e.target.value}&apikey=${apiKey}`).then(res=>res.json()).then(response=>{
                
 
 
@@ -57,6 +62,13 @@ export default function SearchInput() {
             
             }).catch(error=>{
 
+              dispatch(
+                uiActions.setError({
+                    errorMsg:error.toString()
+                })
+              )
+
+
             })
 
 
@@ -68,18 +80,14 @@ export default function SearchInput() {
 
     const selectHandler = (value) =>{
 
-         
          if(value.code){
-             
                          dispatch(
                          forecastActions.changeCity({
                              key:value.code,
                              cityName:`${value.city} (${value.country})`
                          })
                      ) 
-
          }
-
     }
 
 
@@ -106,7 +114,7 @@ export default function SearchInput() {
           onFocus={(e)=>{if(!e.target.value.length) setOptions([])}}
           inputProps={{
             ...params.inputProps,
-            autoComplete: 'new-password', // disable autocomplete and autofill
+            autoComplete: 'off', // disable autocomplete and autofill
           }}
         />
       )}
