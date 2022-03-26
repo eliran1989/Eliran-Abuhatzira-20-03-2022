@@ -176,8 +176,8 @@ export default function Forecast() {
                     </Typography>
                 </CardContent>
                 <CardContent className={[classes.Content , classes.Forecast].join(" , ")} >
-                    { forecastState.fiveDaysForecast.map(()=>
-                        <Paper>
+                    { forecastState.fiveDaysForecast.map((e , index)=>
+                        <Paper key={`forecastItem${index}`}>
                             <Typography variant="h6" component="div" className={classes.Temp}>
                                     <Skeleton sx={{width:"50px"}}/>
                             </Typography>
