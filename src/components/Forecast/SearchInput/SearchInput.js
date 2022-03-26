@@ -75,7 +75,7 @@ export default function SearchInput() {
             })
 
 
-        }, 500);
+        }, 800);
 
 
     }
