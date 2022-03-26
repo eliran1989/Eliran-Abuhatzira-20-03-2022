@@ -4,7 +4,14 @@
     margin: 30px 0;
     text-align: center;
     position: relative;
+}
+
+.Title{
     cursor: pointer;
+}
+
+.Title:hover{
+    text-decoration: underline;
 }
 
 .Temp span{

@@ -53,7 +53,7 @@ export default function FavoriteItem({city_key , city_name}) {
 
 
 
-    const clickFavoriteHandler = () =>{
+    const clickFavoriteHandler = (e) =>{
         navigate(`${process.env.PUBLIC_URL}/`);
         dispatch(
             forecastActions.changeCity({
@@ -69,13 +69,15 @@ export default function FavoriteItem({city_key , city_name}) {
     <>
     {
     currentForecast ?
-    <Paper className={classes.Item} onClick={()=>clickFavoriteHandler()}>
-        <ClearIcon className={classes.RemoveButton} onClick={()=>dispatch(
-            favoritesActions.toggle({
-                cityKey:city_key
-            })
-        )}/>
-        <Typography variant="h5" component="div">
+    <Paper className={classes.Item} >
+        <ClearIcon className={classes.RemoveButton} onClick={(e)=>{
+            dispatch(
+                favoritesActions.toggle({
+                    cityKey:city_key
+                })
+            )
+        }}/>
+        <Typography variant="h5" component="div" onClick={(e)=>clickFavoriteHandler(e)} className={classes.Title}>
             {city_name}
         </Typography>
         <Typography variant="h6" component="div" className={classes.Temp}>
