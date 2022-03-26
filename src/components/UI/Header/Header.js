@@ -13,7 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 export default function Header() {
 
 
-  const [drawerStatus, setDrawerStatus] = useState(true)
+  const [drawerStatus, setDrawerStatus] = useState(false)
 
   const location = useLocation();
 
