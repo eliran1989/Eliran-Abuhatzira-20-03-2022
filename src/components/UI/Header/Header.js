@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Tab, Tabs } from '@mui/material';
+import { IconButton, Tab, Tabs } from '@mui/material';
 import { Link, useLocation  } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 
@@ -31,6 +31,15 @@ export default function Header() {
                 <Tab label="Home"  value={`${process.env.PUBLIC_URL}/`} component={Link} to={`${process.env.PUBLIC_URL}/`}/>
                 <Tab label="Favorites"  value={`${process.env.PUBLIC_URL}/favorites`} component={Link} to={`${process.env.PUBLIC_URL}/favorites`} />
             </Tabs>
+            <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={()=>toggleDrawer()}
+            edge="start"
+            sx={{marginLeft:"10px"}}
+          >
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <SideDrawer status={drawerStatus} toggleDrawer={toggleDrawer}/>
