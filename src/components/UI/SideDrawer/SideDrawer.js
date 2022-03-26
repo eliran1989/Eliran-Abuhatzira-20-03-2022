@@ -1,8 +1,9 @@
 import React from 'react'
-import { Box, Drawer, FormControlLabel, FormGroup, Switch} from '@mui/material';
+import { Box, Divider, Drawer, FormControlLabel, FormGroup, Stack, Switch, Typography} from '@mui/material';
 import classes from './SideDrawer.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from '../../../store/ui-slice';
+
 
 export default function SideDrawer({status ,toggleDrawer}) {
 
@@ -18,7 +19,17 @@ export default function SideDrawer({status ,toggleDrawer}) {
     >
     <Box className={classes.Drawer}>
     <FormGroup className={classes.FormGroup}>
-      <FormControlLabel control={<Switch {...(themeMode=="dark") ? {checked:true} : {checked:false}}  onChange={()=>dispatch(uiActions.toggleThemeMode())}/>} label="Dark mode" />
+    <Typography variant='h6'>Theme</Typography>
+    <Divider />
+      <FormControlLabel control={<Switch {...(themeMode=="dark") ? {checked:true} : {checked:false}}  onChange={()=>dispatch(uiActions.toggleThemeMode())}/>} label={(themeMode=="dark") ? "Dark mode" : "Light mode"} />
+      <Typography variant='h6'>Unit</Typography>
+      <Divider />
+      <Stack direction="row"  alignItems="center">
+        <Typography>F</Typography>
+        <Switch defaultChecked />
+        <Typography>C</Typography>
+      </Stack>
+      
     </FormGroup>
     </Box>
   </Drawer>
