@@ -10,7 +10,8 @@ const forecastSlice = createSlice({
         text:""
     },
     fiveDaysForecast:[],
-    loading:true
+    loading:true,
+    unitType:"C"
   },
   reducers: {
     update(state, action) {
@@ -39,6 +40,9 @@ const forecastSlice = createSlice({
         state.cityName = action.payload.cityName;
         state.loading = true;
 
+    },
+    toggleUnitType(state , action){
+        state.unitType = (state.unitType==="C") ? "F":"C";
     }
   }
 });
