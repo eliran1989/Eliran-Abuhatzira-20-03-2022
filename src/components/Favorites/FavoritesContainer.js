@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Card, Typography} from '@mui/material'
 import FavoriteItem from './FavoriteItem/FavoriteItem'
 import classes from './FavoritesContainer.module.css'
