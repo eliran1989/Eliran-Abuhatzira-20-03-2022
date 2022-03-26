@@ -6,19 +6,19 @@ import WeatherIcon from '../../UI/WeatherIcon/WeatherIcon';
 import ClearIcon from '@mui/icons-material/Clear';
 import { favoritesActions } from '../../../store/favorites-slice';
 import { uiActions } from '../../../store/ui-slice';
+import { forecastActions } from '../../../store/forecast-slice';
 import { useDispatch, useSelector } from 'react-redux';
-import Forecast from '../../Forecast/Forecast';
+import {  useNavigate   } from "react-router-dom";
 
-export default function FavoriteItem({city_key , city_name , error_handler}) {
+
+
+
+export default function FavoriteItem({city_key , city_name}) {
 
     
     const [currentForecast, setCurrentForecast] = useState(false)
-
     const unitType = useSelector((state) => state.forecast.unitType);
-
-
-
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
 
@@ -50,13 +50,26 @@ export default function FavoriteItem({city_key , city_name , error_handler}) {
 
 
     }, [unitType])
+
+
+
+    const clickFavoriteHandler = () =>{
+        navigate(`${process.env.PUBLIC_URL}/`);
+        dispatch(
+            forecastActions.changeCity({
+                cityName:city_name,
+                key:city_key
+            })
+        )
+
+    }
     
 
   return (
     <>
     {
     currentForecast ?
-    <Paper className={classes.Item}>
+    <Paper className={classes.Item} onClick={()=>clickFavoriteHandler()}>
         <ClearIcon className={classes.RemoveButton} onClick={()=>dispatch(
             favoritesActions.toggle({
                 cityKey:city_key
