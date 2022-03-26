@@ -3,6 +3,7 @@ import { Box, Divider, Drawer, FormControlLabel, FormGroup, Stack, Switch, Typog
 import classes from './SideDrawer.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from '../../../store/ui-slice';
+import { forecastActions } from '../../../store/forecast-slice';
 
 
 export default function SideDrawer({status ,toggleDrawer}) {
@@ -10,7 +11,14 @@ export default function SideDrawer({status ,toggleDrawer}) {
 
   const dispatch = useDispatch();
   const themeMode = useSelector((state) =>state.ui.themeMode);
+  const unitType = useSelector((state)=>state.forecast.unitType);
 
+
+
+
+
+
+  
   return (
     <Drawer
      open={status}
@@ -26,7 +34,7 @@ export default function SideDrawer({status ,toggleDrawer}) {
       <Divider />
       <Stack direction="row"  alignItems="center">
         <Typography>F</Typography>
-        <Switch defaultChecked />
+        <Switch {...(unitType==="C") ? {checked:true} : {checked:false}}  onChange={()=>dispatch(forecastActions.toggleUnitType())} />
         <Typography>C</Typography>
       </Stack>
       
