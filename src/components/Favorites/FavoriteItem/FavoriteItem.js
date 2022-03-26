@@ -6,12 +6,17 @@ import WeatherIcon from '../../UI/WeatherIcon/WeatherIcon';
 import ClearIcon from '@mui/icons-material/Clear';
 import { favoritesActions } from '../../../store/favorites-slice';
 import { uiActions } from '../../../store/ui-slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Forecast from '../../Forecast/Forecast';
 
 export default function FavoriteItem({city_key , city_name , error_handler}) {
 
     
     const [currentForecast, setCurrentForecast] = useState(false)
+
+    const unitType = useSelector((state) => state.forecast.unitType);
+
+
 
 
     const dispatch = useDispatch();
@@ -30,7 +35,7 @@ export default function FavoriteItem({city_key , city_name , error_handler}) {
         fetch(`https://dataservice.accuweather.com/currentconditions/v1/${city_key}?apikey=${apiKey}`).then(res=>res.json()).then((response)=>{
 
             setCurrentForecast({
-                temp:response[0].Temperature.Metric,
+                temp:(unitType==="C") ? response[0].Temperature.Metric :response[0].Temperature.Imperial,
                 icon:response[0].WeatherIcon,
                 text:response[0].WeatherText
             })
@@ -44,7 +49,7 @@ export default function FavoriteItem({city_key , city_name , error_handler}) {
 
 
 
-    }, [])
+    }, [unitType])
     
 
   return (
