@@ -4,14 +4,19 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState: {
     error:false,
-    themeMode:"light"
+    themeMode:(localStorage.getItem("themeMode")) ? localStorage.getItem("themeMode") : "light"
   },
   reducers: {
     setError(state , action){
       state.error = action.payload.errorMsg;
     },
     toggleThemeMode(state, action){
-      state.themeMode = (state.themeMode=="light") ? "dark" : "light";
+
+
+        state.themeMode = (state.themeMode=="light") ? "dark" : "light";
+        localStorage.setItem("themeMode" , state.themeMode);
+
+
     }
   }
 });
