@@ -1,0 +1,11 @@
+.Drawer{
+    width: 200px;
+    height: 100%;
+    padding: 20px;
+    left: 0px;
+}
+
+.FormGroup > div{
+    display: flex;
+    justify-content: space-between;
+}
