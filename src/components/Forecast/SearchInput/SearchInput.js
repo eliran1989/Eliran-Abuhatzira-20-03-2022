@@ -25,6 +25,9 @@ export default function SearchInput() {
 
         inputTimeout = setTimeout(() => {
 
+          if(!e.target.value.length){
+            return;
+          }
 
           dispatch(
             uiActions.setError({
