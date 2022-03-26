@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Eliran-Abuhatzira-20-03-2022/static/css/main.348cc3b1.css",
-    "main.js": "/Eliran-Abuhatzira-20-03-2022/static/js/main.6e262d6d.js",
+    "main.js": "/Eliran-Abuhatzira-20-03-2022/static/js/main.f6df203b.js",
     "index.html": "/Eliran-Abuhatzira-20-03-2022/index.html",
     "main.348cc3b1.css.map": "/Eliran-Abuhatzira-20-03-2022/static/css/main.348cc3b1.css.map",
-    "main.6e262d6d.js.map": "/Eliran-Abuhatzira-20-03-2022/static/js/main.6e262d6d.js.map"
+    "main.f6df203b.js.map": "/Eliran-Abuhatzira-20-03-2022/static/js/main.f6df203b.js.map"
   },
   "entrypoints": [
     "static/css/main.348cc3b1.css",
-    "static/js/main.6e262d6d.js"
+    "static/js/main.f6df203b.js"
   ]
 }
