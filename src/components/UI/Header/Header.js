@@ -20,8 +20,8 @@ export default function Header() {
             Weather
           </Typography>
               <Tabs value={location.pathname}>
-                <Tab label="Home"  value="/" component={Link} to="/"/>
-                <Tab label="Favorites"  value="/favorites" component={Link} to="/favorites" />
+                <Tab label="Home"  value={`${process.env.PUBLIC_URL}/`} component={Link} to={`${process.env.PUBLIC_URL}/`}/>
+                <Tab label="Favorites"  value={`${process.env.PUBLIC_URL}/favorites`} component={Link} to={`${process.env.PUBLIC_URL}/favorites`} />
             </Tabs>
         </Toolbar>
       </AppBar>
