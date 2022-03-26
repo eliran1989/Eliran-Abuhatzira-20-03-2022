@@ -38,18 +38,20 @@ export default function Forecast() {
                 errorMsg:false
             })
         )
-
-        /*         *** This code save forecast in local storage ***    
+            
         const localData = (localStorage.getItem("localForecastState")) ? JSON.parse(localStorage.getItem("localForecastState")) :null;
 
-            if(localData && localData.cityKey===forecastState.cityKey){
+            if(localData && localData.cityKey===forecastState.cityKey && localData.cityKey.unitType === forecastState.unitType ){
                 dispatch(
                     forecastActions.update({
-                        localData:localData,
-                        loading:false 
+                        headline:{
+                            category:localData.headline.category,
+                            text:localData.headline.text
+                        },
+                        fiveDaysForecast:localData.fiveDaysForecast
                     })
                 )
-            }else{ */
+            }else{
                 
 
                 fetch(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${forecastState.cityKey}?apikey=${apiKey}&metric=${(forecastState.unitType==="C") ? true:false}`,{}).then(res=>res.json()).then(response=>{
@@ -78,8 +80,7 @@ export default function Forecast() {
                                 category:response.Headline.Category,
                                 text:response.Headline.Text
                             },
-                            fiveDaysForecast:forecast,
-                            loading:false
+                            fiveDaysForecast:forecast
                         })
                     )
         
@@ -93,7 +94,7 @@ export default function Forecast() {
             
                 })
 
-       /*      } */
+            }
 
 
 

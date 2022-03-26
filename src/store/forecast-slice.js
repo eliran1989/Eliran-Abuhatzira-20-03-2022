@@ -16,13 +16,6 @@ const forecastSlice = createSlice({
   reducers: {
     update(state, action) {
 
-        if(action.payload.localData){
-            state.headline = {
-                category:action.payload.localData.headline.category,
-                text:action.payload.localData.headline.text
-            }
-            state.fiveDaysForecast = action.payload.localData.fiveDaysForecast;
-        }else{
             state.headline = {
                 category:action.payload.headline.category,
                 text:action.payload.headline.text
@@ -30,16 +23,14 @@ const forecastSlice = createSlice({
 
             state.fiveDaysForecast = action.payload.fiveDaysForecast;
             localStorage.setItem("localForecastState" , JSON.stringify(state));
-        }
 
-        state.loading = action.payload.loading;
+            state.loading = false;
         
     },
     changeCity(state , action){
-        state.cityKey = action.payload.key;
-        state.cityName = action.payload.cityName;
-        state.loading = true;
-
+            state.cityKey = action.payload.key;
+            state.cityName = action.payload.cityName;
+            state.loading = true;
     },
     toggleUnitType(state , action){
         state.unitType = (state.unitType==="C") ? "F":"C";
