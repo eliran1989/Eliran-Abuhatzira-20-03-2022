@@ -3,13 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 const uiSlice = createSlice({
   name: 'ui',
   initialState: {
-    error:false
+    error:false,
+    themeMode:"light"
   },
   reducers: {
     setError(state , action){
       state.error = action.payload.errorMsg;
-
- 
+    },
+    toggleThemeMode(state, action){
+      state.themeMode = (state.themeMode=="light") ? "dark" : "light";
     }
   }
 });
