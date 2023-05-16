@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Paper, Skeleton, Typography } from '@mui/material';
 import classes from './FavoriteItem.module.css';
 import { apiKey } from '../../../apiKey';
@@ -9,6 +9,7 @@ import { uiActions } from '../../../store/ui-slice';
 import { forecastActions } from '../../../store/forecast-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import {  useNavigate   } from "react-router-dom";
+import { useFetch } from '../../../hooks/useFetch';
 
 
 
@@ -16,14 +17,32 @@ import {  useNavigate   } from "react-router-dom";
 export default function FavoriteItem({city_key , city_name}) {
 
     
-    const [currentForecast, setCurrentForecast] = useState(false)
     const unitType = useSelector((state) => state.forecast.unitType);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+     const {data:forecastResponse , error} = useFetch(`https://dataservice.accuweather.com/currentconditions/v1/${city_key}?apikey=${apiKey}`);
+
+
+    const currentForecast = useMemo(()=>{
+
+        return forecastResponse && {
+            temp:(unitType==="C") ? forecastResponse[0].Temperature.Metric :forecastResponse[0].Temperature.Imperial,
+            icon:forecastResponse[0].WeatherIcon,
+            text:forecastResponse[0].WeatherTextw
+        }
+    },[forecastResponse])
+
+    console.log(forecastResponse)
+
+
+    useEffect(()=>{
+        dispatch(uiActions.setError({errorMsg:error?.toString()}))
+    },[error])
+
 
     useEffect(() => {
-
+     
 
         dispatch(
             uiActions.setError({
@@ -31,25 +50,14 @@ export default function FavoriteItem({city_key , city_name}) {
             })
         )
 
-    
-        fetch(`https://dataservice.accuweather.com/currentconditions/v1/${city_key}?apikey=${apiKey}`).then(res=>res.json()).then((response)=>{
 
-            setCurrentForecast({
-                temp:(unitType==="C") ? response[0].Temperature.Metric :response[0].Temperature.Imperial,
-                icon:response[0].WeatherIcon,
-                text:response[0].WeatherText
-            })
-        }).catch(error=>{
-            dispatch(
-                uiActions.setError({
-                    errorMsg:error.toString()
-                })
-            )
-        })
+
 
 
 
     }, [unitType])
+
+
 
 
 

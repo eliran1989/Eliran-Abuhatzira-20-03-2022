@@ -16,7 +16,7 @@ import { uiActions } from './store/ui-slice';
 
 
 function App(props) {
-  
+
 
   const uiState = useSelector((state) => state.ui);
 
